@@ -11,7 +11,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Jie Sheng
 
-<img src="images/Depsheng.png" width="200px">
+<img src="images/depsheng.png" width="200px">
 
 
 [[github](https://github.com/Depsheng)]
@@ -53,7 +53,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Melville Lee
 
-<img src="images/professional.png" width="200px">
+<img src="images/melvilleleesy.png" width="200px">
 
 [[github](http://github.com/Melvilleleesy)]
 [[portfolio](team/johndoe.md)]

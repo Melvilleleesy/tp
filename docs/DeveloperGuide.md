@@ -262,42 +262,88 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* property agents who manage multiple properties and property-associated contacts
+* have a need to manage a significant number of contacts and client interactions
+* need to track clients, leads and meetings  
+* prefer desktop applications over other types of applications
+* can type fast and prefer typing over mouse interactions
+* are reasonably comfortable using CLI-based applications
+* need to quickly search, update, and organize property and contact information
+* value efficiency and prefer tools that allow faster data entry and retrieval
+* need to manage appointments, property viewings, and follow-ups with clients
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
-
+**Value proposition**:
+Provide a lightweight CLI-based CRM for property agents to efficiently manage client information, 
+including contacts, property preferences, transaction details, meetings, and interactions. 
+The application enables agents to quickly organize and retrieve client data from a single place using 
+fast keyboard-driven commands.
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
+| Priority | As a …​                   | I want to …​                                                      | So that I can…​                                                    |
+|----------|---------------------------|-------------------------------------------------------------------|--------------------------------------------------------------------|
+| `* * *`  | user                      | have a list view of client's details like addresses, banking info | easily see only the information I need                             |
+| `* * *`  | user                      | be able to sort my contacts by importance/date                    | look at key contacts without scrolling through my full contact list |
+| `* * *`  | user                      | delete a person                                                   | remove a client that is no longer working with me                  |
+| `* * *`  | user                      | add a person                                                      |                                                                    |
+| `* * *`  | user                      | exit app                                                          |                                                                    |
+| `* *`    | user with many contacts   | search by details (phone number, address, name etc.)              | locate information of a particular person by that detail           |
+| `* *`    | user                      | hide private contact details                                      | minimize chance of someone else seeing them by accident            |
+| `* *`    | user                      | edit details                                                      | change client's details instead of deleting their current account  |
+| `* *`    | user                      | track my commissions                                              | view which client makes me most money (prioritize  them)           |
+| `* *`    | responsible user          | see overdue follow ups with my clients                            | follow up with my overdue follow ups with my clients               |
+| `* *`    | efficient and busy user   | configure importance metric (commission or client relation years) | add existing clients in my phone into the address book             |
+| `* *`    | user                      | clear my contacts in bulk                                         | start a new contacts list quickly                                  |
+| `* *`    | client centric user       | add interest and hobbies of my clients                            | buy them appreciative gifts before my meeting with them            |
+| `* *`    | responsible   user        | set reminders for things regarding the clients                    | keep track of things or events I have with my clients              |
+| `* *`    | helpful and friendly user | share my contacts to my colleague                                 | share my client's inforation to my colleague for follow up         |
+| `* *`    | responsible user          | document notes about potential clients                            | remember key details for follow-up                                 |
+| `* *`    | responsible user          | maintain records of my client's preferences                       | better treat my clients for customer relation                      |
+| `* *`    | efficient and busy user   | group my clients in different groups                              | look for a person based on the category or group of people         |
+| `*`      | lazy user                 | access past commands                                              | easily repeat my commands with a key                               |
+| `*`      | creative user             | change the colour scheme of my address book                       | see better and edit the address book to my liking                  |
+| `*`      | clumsy user               | easily backup my contact information                              | restore old client information in case I accidentally lose it      |
 
 *{More to be added}*
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `CLIentTracker` and the **Actor** is the `user`, unless specified otherwise)
+
+**Use case: Add a person**
+
+**MSS**
+
+1. User requests to add a person with the required details. 
+2. CLIentTracker adds the person. 
+3. CLIentTracker shows a confirmation message.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The user provides incomplete or invalid details. 
+  
+  * 1a1. CLIentTracker shows an error message.
+
+    Use case ends.
+  
+* 1b. 1b. The person already exists in CLIentTracker. 
+  
+  * 1b1. CLIentTracker shows an error message.
+
+    Use case ends.
 
 **Use case: Delete a person**
 
 **MSS**
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  CLIentTracker shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  CLIentTracker deletes the person
 
     Use case ends.
 
@@ -309,9 +355,119 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. CLIentTracker shows an error message.
 
       Use case resumes at step 2.
+
+**Use case: Delete a person**
+
+**MSS**
+
+1.  User requests to list persons
+2.  CLIentTracker shows a list of persons
+3.  User requests to delete a specific person in the list
+4.  CLIentTracker deletes the person
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. CLIentTracker shows an error message.
+
+      Use case resumes at step 2.
+
+**Use case: Search for a person by detail**
+
+**MSS**
+
+1. User requests to search for persons by a detail.
+2. User provides a search keyword such as name, address, or phone number.
+3. CLIentTracker searches for matching persons.
+4. CLIentTracker shows the list of matching persons. 
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The user provides an invalid or empty search keyword.
+
+  * 2a1. CLIentTracker shows an error message.
+
+    Use case ends.
+
+* 4a. No persons match the search keyword.
+
+  * 4a1. CLIentTracker shows an empty result message.
+  
+    Use case ends.
+
+**Use case: Edit a person's details**
+
+**MSS**
+
+1. User requests to list persons.
+2. CLIentTracker shows a list of persons.
+3. User requests to edit a specific person in the list.
+4. User provides the updated detail(s).
+5. CLIentTracker updates the person’s details.
+6. CLIentTracker shows a confirmation message.
+    
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+    Use case ends.
+
+* 3a. The given index is invalid.
+
+  * 3a1. CLIentTracker shows an error message.
+
+    Use case resumes at step 2.
+
+* 4a. The user provides invalid detail(s).
+
+  * 4a1. CLIentTracker shows an error message.
+
+    Use case resumes at step 4.
+
+**Use case: Delete contacts in bulk**
+
+**MSS**
+
+1. User requests to list persons.
+2. CLIentTracker shows a list of persons.
+3. User requests to delete multiple persons in the list.
+4. User provides the indices of the persons to delete.
+5. CLIentTracker deletes the specified persons.
+6. CLIentTracker shows a confirmation message.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+    Use case ends.
+
+* 4a. One or more given indices are invalid.
+
+  * 4a1. CLIentTracker shows an error message.
+
+    Use case resumes at step 2.
+
+* 4b. The user provides duplicate indices.
+
+  * 4b1. CLIentTracker shows an error message.
+
+    Use case resumes at step 2.
 
 *{More to be added}*
 
