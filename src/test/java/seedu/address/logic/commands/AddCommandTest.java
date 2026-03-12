@@ -50,7 +50,7 @@ public class AddCommandTest {
         AddCommand addCommand = new AddCommand(validPerson);
         ModelStub modelStub = new ModelStubWithPerson(validPerson);
 
-        String expectedMessage = String.format(AddCommand.MESSAGE_DUPLICATE_PERSON, 
+        String expectedMessage = String.format(AddCommand.MESSAGE_DUPLICATE_PERSON,
                 Messages.format(validPerson));
         assertThrows(CommandException.class, expectedMessage, () -> addCommand.execute(modelStub));
     }
