@@ -114,7 +114,7 @@ Examples:
 
 Finds persons whose names or phone numbers contain the given keywords.
 
-Format: 
+Format:
 * Name search: `find KEYWORD [MORE_KEYWORDS]`
 * Phone search: `find p/PHONE_NUMBER`
 
