@@ -211,4 +211,5 @@ public class ParserUtilTest {
     public void parseDetails_invalidDetails_throwsParseException() {
         assertThrows(ParseException.class, () -> ParserUtil.parseDetails(""));
     }
+
 }

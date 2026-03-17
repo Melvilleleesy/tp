@@ -105,7 +105,7 @@ public class ParserUtil {
     public static Details parseDetails(String details) throws ParseException {
         requireNonNull(details);
         String trimmedDetails = details.trim();
-        if (!Details.isValidDetails(trimmedDetails) && !trimmedDetails.equals("No details")) {
+        if (!Details.isValidDetails(trimmedDetails)) {
             throw new ParseException(Details.MESSAGE_CONSTRAINTS);
         }
         return new Details(trimmedDetails);

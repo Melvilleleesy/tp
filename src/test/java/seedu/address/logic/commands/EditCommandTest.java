@@ -202,4 +202,24 @@ public class EditCommandTest {
                 Messages.format(amy)));
     }
 
+    @Test
+    public void editPersonDescriptorEqualsDifferentDetailsReturnsFalse() {
+        EditPersonDescriptor descriptor1 = new EditPersonDescriptorBuilder()
+                .withDetails("Details 1").build();
+        EditPersonDescriptor descriptor2 = new EditPersonDescriptorBuilder()
+                .withDetails("Details 2").build();
+
+        assertFalse(descriptor1.equals(descriptor2));
+    }
+
+    @Test
+    public void editPersonDescriptorEqualsSameDetailsReturnsTrue() {
+        EditPersonDescriptor descriptor1 = new EditPersonDescriptorBuilder()
+                .withDetails("Same details").build();
+        EditPersonDescriptor descriptor2 = new EditPersonDescriptorBuilder()
+                .withDetails("Same details").build();
+
+        assertTrue(descriptor1.equals(descriptor2));
+    }
+
 }
