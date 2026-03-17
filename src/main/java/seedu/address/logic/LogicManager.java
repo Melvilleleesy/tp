@@ -10,6 +10,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -32,6 +33,7 @@ public class LogicManager implements Logic {
     private final Model model;
     private final Storage storage;
     private final AddressBookParser addressBookParser;
+    private Command pendingCommand = null;
 
     /**
      * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}.
@@ -47,7 +49,31 @@ public class LogicManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
 
         CommandResult commandResult;
+
+        if (pendingCommand != null) {
+            if (commandText.equalsIgnoreCase("y")) {
+                // If confirmed, execute the delete logic
+                Command command = pendingCommand;
+                pendingCommand = null;  // Clear the pending command
+                commandResult = command.execute(model);
+            } else if (commandText.equalsIgnoreCase("n")) {
+                // If canceled, just clear the pending command
+                pendingCommand = null;
+                commandResult = new CommandResult("Deletion cancelled.");
+            } else {
+                // If input is not 'y' or 'n', prompt for a valid response
+                return new CommandResult("Please enter 'y' to confirm or 'n' to cancel.");
+            }
+            return commandResult;
+        }
+
         Command command = addressBookParser.parseCommand(commandText);
+
+        if (command instanceof DeleteCommand){
+            pendingCommand = command;
+            return new CommandResult("Are you sure you want to delete this contact? (y/n)");
+        }
+
         commandResult = command.execute(model);
 
         try {
