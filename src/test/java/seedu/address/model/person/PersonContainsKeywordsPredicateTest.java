@@ -282,5 +282,4 @@ public class PersonContainsKeywordsPredicateTest {
                 new PersonContainsKeywordsPredicate(Arrays.asList("e/Alice"));
         assertNotEquals(predicate1, predicate2);
     }
-
 }
