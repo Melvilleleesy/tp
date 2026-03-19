@@ -17,14 +17,14 @@ public class PersonContainsKeywordsPredicateTest {
 
     // --- Equality Tests ---
     @Test
-    public void equals_sameObject_returnsTrue() {
+    public void equalsSameObjectReturnsTrue() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Collections.singletonList("Alice"));
         assertTrue(predicate.equals(predicate));
     }
 
     @Test
-    public void equals_sameValues_returnsTrue() {
+    public void equalsSameValuesReturnsTrue() {
         List<String> keywords = Collections.singletonList("Alice");
         PersonContainsKeywordsPredicate predicate1 = new PersonContainsKeywordsPredicate(keywords);
         PersonContainsKeywordsPredicate predicate2 = new PersonContainsKeywordsPredicate(keywords);
@@ -32,7 +32,7 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void equals_differentValues_returnsFalse() {
+    public void equalsDifferentValuesReturnsFalse() {
         PersonContainsKeywordsPredicate predicate1 =
                 new PersonContainsKeywordsPredicate(Collections.singletonList("Alice"));
         PersonContainsKeywordsPredicate predicate2 =
@@ -41,21 +41,21 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void equals_differentType_returnsFalse() {
+    public void equalsDifferentTypeReturnsFalse() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Collections.singletonList("Alice"));
         assertFalse(predicate.equals(1));
     }
 
     @Test
-    public void equals_null_returnsFalse() {
+    public void equalsNullReturnsFalse() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Collections.singletonList("Alice"));
         assertFalse(predicate.equals(null));
     }
 
     @Test
-    public void equals_differentFieldTypes_returnsFalse() {
+    public void equalsDifferentFieldTypesReturnsFalse() {
         PersonContainsKeywordsPredicate predicate1 =
                 new PersonContainsKeywordsPredicate(Arrays.asList("n/Alice"));
         PersonContainsKeywordsPredicate predicate2 =
@@ -65,14 +65,14 @@ public class PersonContainsKeywordsPredicateTest {
 
     // --- Empty Keywords ---
     @Test
-    public void testEmptyKeywordList_returnsFalse() {
+    public void testEmptyKeywordListReturnsFalse() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
     }
 
     @Test
-    public void testOnlyEmptyPrefixedKeywords_returnsFalse() {
+    public void testOnlyEmptyPrefixedKeywordsReturnsFalse() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Arrays.asList("n/", "p/", "a/", "e/", "d/"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
@@ -80,7 +80,7 @@ public class PersonContainsKeywordsPredicateTest {
 
     // --- General Keywords ---
     @Test
-    public void testGeneralKeyword_matchesAnyField() {
+    public void testGeneralKeywordMatchesAnyField() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Collections.singletonList("unique"));
         assertTrue(predicate.test(new PersonBuilder().withName("unique name").build()));
@@ -91,21 +91,21 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void testGeneralKeyword_noMatch_returnsFalse() {
+    public void testGeneralKeywordNoMatch() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Collections.singletonList("Charlie"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
     }
 
     @Test
-    public void testMultipleGeneralKeywords_anyMatch_returnsTrue() {
+    public void testMultipleGeneralKeywordsAnyMatch() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Arrays.asList("Alice", "Bob", "Charlie"));
         assertTrue(predicate.test(new PersonBuilder().withName("Bob").build()));
     }
 
     @Test
-    public void testMultipleGeneralKeywords_noneMatch_returnsFalse() {
+    public void testMultipleGeneralKeywordsNoneMatch() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Arrays.asList("David", "Eve"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
@@ -113,35 +113,35 @@ public class PersonContainsKeywordsPredicateTest {
 
     // --- Field-Specific Keywords ---
     @Test
-    public void testNameKeywordsWithPrefix_returnsTrue() {
+    public void testNameKeywordsWithPrefix() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Arrays.asList("n/Alice", "Bob"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
     }
 
     @Test
-    public void testPhoneKeywordsWithPrefix_returnsTrue() {
+    public void testPhoneKeywordsWithPrefix() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Arrays.asList("p/9123", "4567"));
         assertTrue(predicate.test(new PersonBuilder().withPhone("91234567").build()));
     }
 
     @Test
-    public void testAddressKeywordsWithPrefix_returnsTrue() {
+    public void testAddressKeywordsWithPrefix() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Arrays.asList("a/Main", "Street"));
         assertTrue(predicate.test(new PersonBuilder().withAddress("123 Main Street").build()));
     }
 
     @Test
-    public void testEmailKeywordsWithPrefix_returnsTrue() {
+    public void testEmailKeywordsWithPrefix() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Arrays.asList("e/alice", "example"));
         assertTrue(predicate.test(new PersonBuilder().withEmail("alice@example.com").build()));
     }
 
     @Test
-    public void testDetailsKeywordsWithPrefix_returnsTrue() {
+    public void testDetailsKeywordsWithPrefix() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Arrays.asList("d/friend", "Good"));
         assertTrue(predicate.test(new PersonBuilder().withDetails("Good friend").build()));
@@ -149,21 +149,21 @@ public class PersonContainsKeywordsPredicateTest {
 
     // --- Logic Across Fields ---
     @Test
-    public void testAndLogic_multipleFields_returnsTrue() {
+    public void testAndLogicMultipleFields() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Arrays.asList("n/Alice", "p/9123"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("91234567").build()));
     }
 
     @Test
-    public void testAndLogic_multipleFields_oneFails_returnsFalse() {
+    public void testAndLogicMultipleFieldsOneFails() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Arrays.asList("n/Alice", "p/9999"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("91234567").build()));
     }
 
     @Test
-    public void testOrLogic_withinField_returnsTrue() {
+    public void testOrLogicWithinField() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Arrays.asList("n/Alice", "Bob"));
         assertTrue(predicate.test(new PersonBuilder().withName("Bob").build()));
@@ -171,14 +171,14 @@ public class PersonContainsKeywordsPredicateTest {
 
     // --- Edge Cases ---
     @Test
-    public void testEmptyPrefixedKeyword_ignored() {
+    public void testEmptyPrefixedKeywordIgnored() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Arrays.asList("n/", "Alice"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice").build()));
     }
 
     @Test
-    public void testFieldContextPersistence_returnsTrue() {
+    public void testFieldContextPersistence() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Arrays.asList("n/Alice", "Bob", "Charlie"));
         assertTrue(predicate.test(new PersonBuilder().withName("Bob").build()));
@@ -186,7 +186,7 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void testCaseInsensitiveMatching_allFields() {
+    public void testCaseInsensitiveMatchingAllFields() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Arrays.asList(
                         "n/alice", "p/9123", "a/MAIN", "e/ALICE", "d/FRIEND"));
@@ -200,7 +200,7 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void testPartialSubstringMatching_allFields() {
+    public void testPartialSubstringMatchingAllFields() {
         assertTrue(new PersonContainsKeywordsPredicate(Arrays.asList("n/lic"))
                 .test(new PersonBuilder().withName("Alice").build()));
         assertTrue(new PersonContainsKeywordsPredicate(Arrays.asList("p/234"))
@@ -222,14 +222,14 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void testNumericKeywordsInNameField_returnsTrue() {
+    public void testNumericKeywordsInNameField() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Collections.singletonList("n/007"));
         assertTrue(predicate.test(new PersonBuilder().withName("Agent 007").build()));
     }
 
     @Test
-    public void testTextKeywordsInPhoneField_returnsFalse() {
+    public void testTextKeywordsInPhoneField() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Collections.singletonList("p/abc"));
         assertFalse(predicate.test(new PersonBuilder().withPhone("91234567").build()));
@@ -237,7 +237,7 @@ public class PersonContainsKeywordsPredicateTest {
 
     // --- Utility Methods ---
     @Test
-    public void toString_includesAllKeywords() {
+    public void toStringIncludesAllKeywords() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Arrays.asList("n/Alice", "p/9123", "friend"));
         String result = predicate.toString();
@@ -255,7 +255,7 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void toString_emptyKeywords_returnsExpectedString() {
+    public void toStringEmptyKeywordsReturnsExpectedString() {
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Collections.emptyList());
         String result = predicate.toString();
@@ -270,7 +270,7 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void equals_sameFieldKeywords_returnsTrue() {
+    public void equalsSameFieldKeywordsReturnsTrue() {
         PersonContainsKeywordsPredicate predicate1 =
                 new PersonContainsKeywordsPredicate(Arrays.asList("n/Alice", "p/9123"));
         PersonContainsKeywordsPredicate predicate2 =
@@ -279,7 +279,7 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void equals_differentFieldKeywords_returnsFalse() {
+    public void equalsDifferentFieldKeywordsReturnsFalse() {
         PersonContainsKeywordsPredicate predicate1 =
                 new PersonContainsKeywordsPredicate(Arrays.asList("n/Alice", "p/9123"));
         PersonContainsKeywordsPredicate predicate2 =
