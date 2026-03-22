@@ -1,9 +1,10 @@
 ---
 layout: page
 title: User Guide
+toc: true
+toc_label: "On this page"
+toc_icon: "list"
 ---
-# User Guide
-
 CLIentTracker is a **desktop CRM designed for property agents, optimized for use via a Command Line Interface** (CLI) while still retaining the benefits of a simple visual interface. It allows agents to manage clients, listings, and notes quickly through commands such as `add`, `edit`, `find`, and `list`. If you can type fast, CLIentTracker lets you update and retrieve information significantly faster than traditional GUI-based CRM systems.
 
 
@@ -12,24 +13,25 @@ Unlike many web-based CRMs, CLIentTracker works **fully offline**, allowing agen
 
 CLIentTracker is built for agents who value **speed, reliability, and control**. By removing dependency on internet access and reducing interaction to simple, efficient commands, it enables agents to focus on their clients rather than their tools—making it especially effective in fast-paced, real-world selling environments where every second counts.
 
-1. [Quick start](#quick-start)
-2. [Command summary](#command-summary)
-3. [Features](#features)
-4. [FAQ](#faq)
-5. [Known issues](#known-issues)
+## :page_facing_up: Contents
+- [:rocket: Quick Start](#quick-start)
+- [:clipboard: Command Summary](#command-summary)
+- [:gear: Features](#features)
+- [:question: FAQ](#faq)
+- [:warning: Known Issues](#known-issues)
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Quick start
+## :rocket: Quick Start
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
+1. Ensure you have Java `17` or above installed on your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for your CLIentTrcaker.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar clienttracker.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
@@ -38,20 +40,20 @@ CLIentTracker is built for agents who value **speed, reliability, and control**.
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to CLIentTracker.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
    * `clear` : Deletes all contacts.
 
-   * `find n/John` : Finds for the string "John" in the name field. 
+     * `find n/John` : Finds contacts whose names contain ‘John’.
 
    * `exit` : Exits the app.
 
 1. Refer to the [Command summary](#command-summary) below for a quick list of all commands or [Features](#features) for detailed descriptions.
-
+.
 --------------------------------------------------------------------------------------------------------------------
-## Command summary
+## :clipboard: Command Summary
 
 <div markdown="block" class="alert alert-info">
 
@@ -80,7 +82,7 @@ Action | Description                                                   | Format,
 **Add** | [Adds a new person](#adding-a-person-add)                     | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DETAILS] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 d/Looking to buy in north t/BUYER` 
 **Edit** | [Edits an existing person](#editing-a-person-edit)            | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DETAILS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com d/Updated work details`
 **Find** | [Finds persons by name or phone](#locating-persons-find)      | `find KEYWORD [MORE_KEYWORDS]` for name search<br> `find p/PHONE_NUMBER` for phone search<br> e.g., `find James Jake` or `find p/98765432`
-**Delete** | [Deletes a person](#deleting-a-person--delete)                | `delete INDEX`<br> e.g., `delete 3`
+**Delete** | [Deletes a person](#deleting-a-person--delete)                | `delete PHONE`<br> e.g., `delete 91234567`
 **Clear** | [Clears all entries](#clearing-all-entries--clear)            | `clear`
 **Mark** | [Adds contact into favourites](#favourites-mark-and-unmark)   | `mark INDEX` <br> Example: `mark 1`
 **Unmark** | [Removes contact from favourites](#favourites-mark-and-unmark) | `unmark INDEX` <br> Example: `mark 1`
@@ -90,7 +92,7 @@ Action | Description                                                   | Format,
 
 
 --------------------------------------------------------------------------------------------------------------------
-## Features
+## :gear: Features
 
 ### Adding a person: `add`
 
@@ -122,7 +124,7 @@ Examples:
 
 ### Editing a person: `edit`
 
-Edits an existing person in the address book.
+Edits an existing person in CLIentTracker.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DETAILS] [t/TAG]…​`
 
@@ -143,7 +145,7 @@ Behavior:
 * You can remove all the person’s tags by typing `t/` without
     specifying any tags after it.
 * When editing details, the existing details of the person will be removed i.e adding of details is not cumulative.
-* Details field can not be empty, details will not be updated.
+* Details field cannot be empty, details will not be updated.
 * If a contact with the same phone number already exists, the contact will not be updated.
 
 Examples:
@@ -215,21 +217,21 @@ Examples (Combined Search):
 
 ### Deleting a person : `delete`
 
-Deletes the specified person from the address book.
+Deletes the specified person from CLIent Tracker.
 
-Format: `delete INDEX`
+Format: `delete PHONE`
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* Deletes the person with `PHONE`.
+* The PHONE refers to the index number shown in the displayed person list.
+* The PHONE **must consist of 8 positive integer** 91234567, 01010101…​
+* Confirm with y/n after delete command was entered
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `delete 91234567` deletes the person with said phone number in CLIentTracker.
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all entries from CLIentTracker.
 
 Format: `clear`
 
@@ -238,10 +240,10 @@ Format: `clear`
 *Add or remove contacts from favourites*
 
 Format: `mark INDEX` or `unmark INDEX`
-* Mark INDEX adds the contact at INDEX to favourites
-* Unmark INDEX removes the contact at INDEX from favourites
-* INDEX refers to the index number shown on the displayed person list
-  * INDEX must be a valid number in the list
+* Mark `INDEX` adds the contact at the specified index to favourites
+* Unmark `INDEX` removes the contact at INDEX from favourites
+* `INDEX` refers to the index number shown on the displayed person list
+  * `INDEX` must be a valid number in the list
 
 Examples:
 * `mark 1` <br> ![mark 1 image](./images/mark_1_image.png)
@@ -250,7 +252,7 @@ Examples:
 
 ### Listing all persons: `list`
 
-Shows a list of all persons in the address book.
+Shows a list of all persons in the CLIentTracker.
 
 Format: `list`
 
@@ -269,15 +271,23 @@ Exits the program.
 Format: `exit`
 
 
-### Saving the data
+### :floppy_disk: Data Storage & Saving
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+CLIentTracker is designed to be **fast and worry-free** — your data is automatically saved after every command.
 
-### Editing the data file
+There is **no need to press a save button**. Everything is stored locally on your device, allowing you to:
+- Work completely offline
+- Access your data instantly
+- Avoid losing changes due to unsaved progress
+
+All data is stored in:  
+`[JAR file location]/data/addressbook.json`
+
+### :pencil2: Editing the data file
 
 AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+<div markdown="span" cl ass="alert alert-warning">:exclamation: **Caution:**
 If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
@@ -285,14 +295,14 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 
 --------------------------------------------------------------------------------------------------------------------
 
-## FAQ
+## :question: FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Known issues
+## :warning: Known Issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
