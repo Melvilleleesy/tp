@@ -2,11 +2,21 @@
 layout: page
 title: User Guide
 ---
+# User Guide
 
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+CLIentTracker is a **desktop CRM designed for property agents, optimized for use via a Command Line Interface** (CLI) while still retaining the benefits of a simple visual interface. It allows agents to manage clients, listings, and notes quickly through commands such as `add`, `edit`, `find`, and `list`. If you can type fast, CLIentTracker lets you update and retrieve information significantly faster than traditional GUI-based CRM systems.
 
-* Table of Contents
-{:toc}
+
+Unlike many web-based CRMs, CLIentTracker works **fully offline**, allowing agents to continue working seamlessly in environments with poor or unstable connectivity, such as property viewings, new developments, or while on the move. Core operations like searching for clients or updating details can be done instantly without waiting for pages to load or systems to sync. When the application is closed, all data is automatically saved and archived, ensuring that records remain secure without requiring manual backups.
+
+
+CLIentTracker is built for agents who value **speed, reliability, and control**. By removing dependency on internet access and reducing interaction to simple, efficient commands, it enables agents to focus on their clients rather than their tools—making it especially effective in fast-paced, real-world selling environments where every second counts.
+
+1. [Quick start](#quick-start)
+2. [Command summary](#command-summary)
+3. [Features](#features)
+4. [FAQ](#faq)
+5. [Known issues](#known-issues)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -34,13 +44,14 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 
    * `clear` : Deletes all contacts.
 
+   * `find n/John` : Finds for the string "John" in the name field. 
+
    * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+1. Refer to the [Command summary](#command-summary) below for a quick list of all commands or [Features](#features) for detailed descriptions.
 
 --------------------------------------------------------------------------------------------------------------------
-
-## Features
+## Command summary
 
 <div markdown="block" class="alert alert-info">
 
@@ -64,37 +75,48 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
-### Viewing help : `help`
+Action | Description                                              | Format, Examples
+--------|----------------------------------------------------------|------------------
+**Add** | [Adds a new person](#adding-a-person-add)                | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DETAILS] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 d/Looking to buy in north t/BUYER` (dylan can edit here)
+**Edit** | [Edits an existing person](#editing-a-person-edit)       | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DETAILS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com d/Updated work details`
+**Find** | [Finds persons by name or phone](#locating-persons-find) | `find KEYWORD [MORE_KEYWORDS]` for name search<br> `find p/PHONE_NUMBER` for phone search<br> e.g., `find James Jake` or `find p/98765432`
+**Delete** | [Deletes a person](#deleting-a-person-delete)            | `delete INDEX`<br> e.g., `delete 3`
+**Clear** | [Clears all entries](#clearing-all-entries-clear)        | `clear`
+**List** | [Lists all persons](#listing-all-persons-list)           | `list`
+**Help** | [Shows help message](#viewing-help-help)                 | `help`
+**Exit** | [Exits the app](#exiting-the-program-exit)               | `exit`
 
-Shows a message explaining how to access the help page.
 
-![help message](images/helpMessage.png)
-
-Format: `help`
-
+--------------------------------------------------------------------------------------------------------------------
+## Features
 
 ### Adding a person: `add`
 
-Adds a person to the address book.
-
-*The phone number is the unique identifier for a person. So there cannot be two persons with the same phone number.*
+Adds a new contact
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DETAILS] [t/TAG]…​`
+
+Parameters:
+* `p/` : Phone number of the new contact (*Unique identifier*)
+* `n/` : Name of the new contact
+* `e/` : Email of the new contact
+* `a/` : Address of the new contact
+* `d/` : Details of the new contact [optional]
+* `t/` : Tags of the new contact [optional] (dylan maybe can edit here)
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
 </div>
 
+Behavior:
+* If a contact with the same phone number already exists, the new contact will not be added.
+* Details will default to "No Details" if parameter not used or empty.
+
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe e/betsycrowe@example.com a/Newgate Prison p/1234567 t/BUYER`
 * `add n/Alex Yeoh p/87438807 e/alexyeoh@example.com a/Blk 30 Geylang Street 29, #06-40 d/Looking for apartment near city`
 
-### Listing all persons : `list`
-
-Shows a list of all persons in the address book.
-
-Format: `list`
 
 ### Editing a person : `edit`
 
@@ -102,12 +124,25 @@ Edits an existing person in the address book.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DETAILS] [t/TAG]…​`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+Parameters:
+* `INDEX` : The index of the person to edit. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* `p/` : Phone number of the new contact (*Unique identifier*)
+* `n/` : Name of the new contact
+* `e/` : Email of the new contact
+* `a/` : Address of the new contact
+* `d/` : Details of the new contact [optional]
+* `t/` : Tags of the new contact [optional] (dylan maybe can edit here)
+
+Behavior:
+* The index field is mandatory and **must be a positive integer smaller than the number of contacts**
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person’s tags by typing `t/` without
     specifying any tags after it.
+* When editing details, the existing details of the person will be removed i.e adding of details is not cumulative.
+* Details field can not be empty, details will not be updated.
+* If a contact with the same phone number already exists, the contact will not be updated.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
@@ -164,11 +199,26 @@ Clears all entries from the address book.
 
 Format: `clear`
 
+### Listing all persons : `list`
+
+Shows a list of all persons in the address book.
+
+Format: `list`
+
+### Viewing help : `help`
+
+Shows a message explaining how to access the help page.
+
+![help message](images/helpMessage.png)
+
+Format: `help`
+
 ### Exiting the program : `exit`
 
 Exits the program.
 
 Format: `exit`
+
 
 ### Saving the data
 
@@ -183,9 +233,6 @@ If your changes to the data file makes its format invalid, AddressBook will disc
 Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -203,14 +250,3 @@ _Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Command summary
-
-Action | Format, Examples
---------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]` for name search<br> `find p/PHONE_NUMBER` for phone search<br> e.g., `find James Jake` or `find p/98765432`
-**List** | `list`
-**Help** | `help`
