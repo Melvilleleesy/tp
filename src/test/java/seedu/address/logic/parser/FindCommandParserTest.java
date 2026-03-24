@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -41,6 +42,18 @@ public class FindCommandParserTest {
                                 Arrays.asList("Alice", "Bob", "Charlie"))));
 
         assertParseSuccess(parser, " \n Alice \t Bob   Charlie \n ", expectedFindCommand);
+    }
+
+    @Test
+    public void parseFindArguments_multipleEmptyParts_ignored() throws Exception {
+        FindCommandParser parser = new FindCommandParser();
+
+        String input = "   n/Alice   p/12345678";
+
+        FindCommand command = parser.parse(input);
+
+        // Should not throw and should parse correctly
+        assertNotNull(command);
     }
 
     @Test
