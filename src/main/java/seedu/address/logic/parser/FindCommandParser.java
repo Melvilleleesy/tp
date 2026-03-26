@@ -75,6 +75,9 @@ public class FindCommandParser implements Parser<FindCommand> {
             return fieldMap;
         }
 
+
+        // Shouldn't have a prefix in the string and not start with it as it indicates that it is searching
+        // by general search first and then prefix search next
         if (!input.trim().matches("^[npaed]/.*")) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
@@ -158,11 +161,13 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @param raw The raw string containing whitespace-separated values.
      */
     private void addGeneralValues(Map<String, List<String>> fieldMap, String raw) {
-        String[] values = raw.trim().split("\\s+");
+        String[] values = raw.split(",");
+
         fieldMap.putIfAbsent(PersonContainsKeywordsPredicate.GENERAL_KEY, new ArrayList<>());
 
         for (String value : values) {
             String cleaned = value.trim();
+
             if (!cleaned.isEmpty()) {
                 fieldMap.get(PersonContainsKeywordsPredicate.GENERAL_KEY).add(cleaned);
             }
