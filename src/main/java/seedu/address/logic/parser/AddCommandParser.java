@@ -42,7 +42,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                         PREFIX_DETAILS,
                         PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
@@ -57,7 +57,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)
                 .filter(emailStr -> !emailStr.trim().isEmpty())
                 .orElse(""));
-        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
+        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)
+                .filter(addressStr -> !addressStr.trim().isEmpty())
+                .orElse(""));
         Details details = ParserUtil.parseDetails(argMultimap.getValue(PREFIX_DETAILS)
                 .filter(detail -> !detail.trim().isEmpty())
                 .orElse("No details"));

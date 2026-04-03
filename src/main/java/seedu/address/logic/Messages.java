@@ -42,7 +42,7 @@ public class Messages {
                 .append("; Email: ")
                 .append(person.getEmail().value.isEmpty() ? "No email" : person.getEmail())
                 .append("; Address: ")
-                .append(person.getAddress())
+                .append(person.getAddress().value.isEmpty() ? "No address" : person.getAddress())
                 .append("; Details: ")
                 .append(person.getDetails())
                 .append("; Tags: ");
