@@ -30,22 +30,11 @@ else ([else])
                 :Parse as days to next weekday (23:59);
             endif
         else ([else])
-            :Try all date/time formats;
-            if () then ([Format matches?])
-                if () then ([Has time component?])
-                    :Extract date and time;
-                else ([else])
-                    :Extract date + 23:59;
-                endif
-                :Validate not in past;
-            else ([else])
-                :Throw InvalidFormatException;
-            endif
+            :Pass input to explicit date/time parsing;
         endif
     endif
 endif
 
 :Return DateTimeParseResult;
-
 stop
 @enduml

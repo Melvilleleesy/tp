@@ -97,11 +97,11 @@ A person can have any number of tags (including 0)
 Behavior:
 * If a contact with the same phone number already exists, the new contact will not be added.
 * Name must be 1-50 characters and contain only alphanumeric characters and spaces.
-* Details will default to "No Details" if parameter not used.
-* Details must be under 512 characters and cannot be empty.
-* Email will default to empty string if parameter not used.
+* Details will default to empty if parameter not used.
+* Details must not be over512 characters and cannot be empty.
+* Email will default to empty if parameter not used.
 * Email must be 2-254 characters if provided, or empty to represent no email.
-* Address will default to empty string if parameter not used.
+* Address will default to empty if parameter not used.
 * Address must be 1-255 characters if provided, or empty to represent no address.
 
 Examples:
@@ -252,7 +252,7 @@ Format: `meeting INDEX DATE_TIME`
 
 ### ⚠️ Important Notes
 - Meeting dates and times must be in the future
-- If no time is specified, defaults to 12:00 AM (midnight)
+- If no time is specified, defaults to 11:59 PM (`23:59`)
 - All date/time inputs are case-insensitive
 - When using (day month) format, avoid using (24-hour format)
   - `20 april 2359` will result in year 2359; Instead use `20 april 11:59`
