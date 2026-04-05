@@ -1,0 +1,25 @@
+@startuml
+!include style.puml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+
+start
+:Input date/time string;
+:Try all supported date/time formats;
+
+if () then ([Format matches?])
+    if () then ([Has time component?])
+        :Extract date and time;
+    else ([else])
+        :Extract date + 23:59;
+    endif
+
+    :Validate not in past;
+    :Return DateTimeParseResult;
+else ([else])
+    :Throw InvalidFormatException;
+endif
+
+stop
+@enduml

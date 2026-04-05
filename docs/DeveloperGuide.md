@@ -242,6 +242,69 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
+### Meetings feature
+
+The `meeting` command allows users to assign a meeting date and time to a person in the currently displayed list.
+Its implementation is split into two main parts:
+
+1. parsing the user-provided date/time string into a valid `Meeting`
+2. executing the command to replace the target `Person` with an updated copy containing the new meeting
+
+#### How the command works
+
+When the user enters a command such as `meeting 1 15 Mar 2026 4pm`, `LogicManager` passes the full input to
+`AddressBookParser`, which creates a `MeetingCommandParser` for the `meeting` command word.
+
+`MeetingCommandParser#parse(String args)` then:
+
+* separates the target index from the remaining date/time text
+* parses the index using `ParserUtil#parseIndex(...)`
+* parses the remaining date/time string using `DateTimeUtil#parseDateTime(...)`
+* constructs a `Meeting` from the parsed `LocalDateTime`
+* returns a `MeetingCommand` containing the parsed index and meeting
+
+During execution, `MeetingCommand#execute(Model model)`:
+
+* retrieves the currently filtered person list from the model
+* validates that the provided index refers to an existing displayed person
+* creates a new `Person` object that copies the original person's fields and replaces only the meeting field
+* updates the model through `Model#setPerson(personToEdit, updatedPerson)`
+* returns a `CommandResult` containing the formatted confirmation message
+
+The sequence of interactions across the `Logic`, `commons.util`, and `Model` components is split into two diagrams:
+
+* command parsing: [`MeetingCommandParsingSequenceDiagram.puml`](diagrams/MeetingCommandParsingSequenceDiagram.puml)\
+<img src="images/MeetingCommandParsingSequenceDiagram.png"/>
+* command execution: [`MeetingCommandExecutionSequenceDiagram.puml`](diagrams/MeetingCommandExecutionSequenceDiagram.puml)\
+<img src="images/MeetingCommandExecutionSequenceDiagram.png"/>
+
+#### Date/time parsing
+
+The parsing logic is centralised in `DateTimeUtil#parseDateTime(String dateTimeStr)`.
+This keeps `MeetingCommandParser` focused on command parsing while allowing the same date/time parsing rules to be
+reused consistently.
+
+`DateTimeUtil#parseDateTime(...)` works as follows:
+
+* first checks for relative-date inputs such as `today` and `tomorrow`
+* then checks weekday inputs such as `monday` or `fri`, which are resolved to the next occurrence of that weekday
+* otherwise, iterates through a list of supported `DateTimeFormatter`s to match explicit date formats such as
+  `15 Mar 2026 4pm`, `15/3/2026 16:30`, and `15.3.2026 1630`
+* if the input contains no time component, defaults the time to `23:59`
+* validates that the parsed `LocalDateTime` is not in the past
+* returns the parsed result as a `DateTimeParseResult`
+
+For relative dates, `parseRelativeDate(...)` computes the date offset from the current day and optionally parses the
+time using `parseTime(...)`. For weekday-based input, `parseWeekday(...)` resolves the next matching day with
+`TemporalAdjusters.next(...)` before combining it with either the parsed time or `23:59`.
+
+The control flow of these parsing branches is also split into two smaller diagrams:
+
+* relative-date parsing: [`RelativeMeetingDateParsingActivityDiagram.puml`](diagrams/RelativeMeetingDateParsingActivityDiagram.puml)\
+<img src="images/RelativeMeetingDateParsingActivityDiagram.png"/>
+* explicit-format parsing: [`ExplicitMeetingDateParsingActivityDiagram.puml`](diagrams/ExplicitMeetingDateParsingActivityDiagram.puml)\
+<img src="images/ExplicitMeetingDateParsingActivityDiagram.png"/>
+
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
