@@ -18,13 +18,13 @@ end note
 :Execute ClearCommand on Model;
 
 :Create new empty AddressBook instance;
-:Model replaces current AddressBook 
+:Model replaces current AddressBook
 with the empty instance;
 
-:Return CommandResult with 
+:Return CommandResult with
 success message;
 
-:Display "Address book has 
+:Display "Address book has
 been cleared!" to user;
 
 stop
