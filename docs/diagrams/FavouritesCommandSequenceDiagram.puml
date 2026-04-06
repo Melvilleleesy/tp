@@ -42,7 +42,7 @@ activate FilteredList
 note right of FilteredList
   Predicate filters persons where
   **isFavourite == true**
-  
+
   Only persons marked as favourites
   will be shown in the list
 end note
