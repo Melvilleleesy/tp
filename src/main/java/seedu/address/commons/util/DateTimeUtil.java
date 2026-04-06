@@ -329,7 +329,7 @@ public class DateTimeUtil {
 
         if (parts.length == 1) {
             // Only weekday, default to 12:00 AM (midnight)
-            return new DateTimeParseResult(targetDate, LocalTime.of(0, 0));
+            return new DateTimeParseResult(targetDate, LocalTime.of(23, 59));
         } else {
             // Weekday + time
             LocalTime time = parseTime(parts[1]);
@@ -342,8 +342,8 @@ public class DateTimeUtil {
         LocalDate date = LocalDate.now().plusDays(daysToAdd);
 
         if (parts.length == 1) {
-            // Only date, default to 12:00 AM (midnight)
-            return new DateTimeParseResult(date, LocalTime.of(0, 0));
+            // Only date, default to 2359hrs
+            return new DateTimeParseResult(date, LocalTime.of(23, 59));
         } else {
             // Date + time
             LocalTime time = parseTime(parts[1]);
@@ -415,8 +415,8 @@ public class DateTimeUtil {
             return LocalTime.of(hour % 12 + (hour >= 12 ? 12 : 0), minute);
         }
 
-        // Default to 12:00 AM (midnight) if no time specified
-        return LocalTime.of(0, 0);
+        // Default to 2359hrs if no time specified
+        return LocalTime.of(23, 59);
     }
 
     /**
