@@ -2,10 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.FindCommand;
@@ -70,7 +67,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         Map<String, List<String>> fieldMap = new HashMap<>();
 
         Pattern anyPrefixPattern = Pattern.compile("(^|\\s)[a-zA-Z]/");
-        Pattern invalidPrefixPattern = Pattern.compile("(^|\\s)[^npaed\\s]/");
+        Pattern invalidPrefixPattern = Pattern.compile("(^|\\s)[^npaedt\\s]/");
 
         boolean hasAnyPrefixPattern = anyPrefixPattern.matcher(input).find();
         boolean hasInvalidPrefix = invalidPrefixPattern.matcher(input).find();
@@ -80,7 +77,7 @@ public class FindCommandParser implements Parser<FindCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        if (hasAnyPrefixPattern && !input.matches("^[npaed]/.*")) {
+        if (hasAnyPrefixPattern && !input.matches("^[npaedt]/.*")) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
@@ -119,7 +116,7 @@ public class FindCommandParser implements Parser<FindCommand> {
             if (part.isEmpty()) {
                 continue;
             }
-            if (!part.matches("[npaed]/.*")) {
+            if (!part.matches("[npaedt]/.*")) {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
             }
@@ -156,13 +153,21 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @param key The prefix key (e.g. {@code "n/"}).
      * @param raw The raw string containing comma-separated values.
      */
-    private void addTaggedValues(Map<String, List<String>> fieldMap, String key, String raw) {
+    private void addTaggedValues(Map<String, List<String>> fieldMap, String key, String raw) throws ParseException {
         String[] values = raw.split(",");
         fieldMap.putIfAbsent(key, new ArrayList<>());
 
+        List<String> allowedTags = List.of("buyer", "seller", "landlord", "renter");
+
         for (String value : values) {
             String cleaned = value.trim();
+
             if (!cleaned.isEmpty()) {
+                if (Objects.equals(key, "t/") && !allowedTags.contains(cleaned.toLowerCase())) {
+                    throw new ParseException(
+                            "Tag values must be Buyer, Seller, Landlord, or Renter");
+                }
+
                 fieldMap.get(key).add(cleaned);
             }
         }
