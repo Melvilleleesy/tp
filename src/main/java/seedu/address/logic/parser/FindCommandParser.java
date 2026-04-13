@@ -164,12 +164,10 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         for (String value : values) {
             String cleaned = value.trim();
-
             if (cleaned.isEmpty()) {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
             }
-
             validateKeyword(cleaned);
             validateTagKeyword(key, cleaned);
             fieldMap.get(key).add(cleaned);
